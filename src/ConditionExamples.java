@@ -48,38 +48,20 @@ public class ConditionExamples {
 
 
 
-
         //move until the wall 
         while (karel.frontIsClear()) {
             //if there is something to pick up
             if (karel.canPickThing()) {
                 //pick thing
                 karel.pickThing();
-
-
-            }
-
-            karel.move();
-            while (true) {
-                karel.setColor(Color.CYAN);
-                karel.setColor(Color.MAGENTA);
-                karel.setColor(Color.RED);
-                karel.setColor(Color.BLUE);
-                karel.setColor(Color.PINK);
-                karel.setColor(Color.ORANGE);
-                karel.setColor(Color.GREEN);
-                karel.setColor(Color.YELLOW);
-                karel.setColor(Color.BLACK);
-                karel.setColor(Color.WHITE);
-                karel.setColor(Color.CYAN);
-                
+               
+                }else{
+                //if karel cant pick thing, move
                 
             }
-
 
 
         }
-
 
 
 
