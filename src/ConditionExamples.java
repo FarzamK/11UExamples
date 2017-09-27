@@ -16,16 +16,14 @@ import java.awt.Color;
  */
 public class ConditionExamples {
 
+    private static City kw;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // create a city
-        City kw = new City();
-
-        // put a robot in the city
-        Robot karel = new Robot(kw, 2, 1, Direction.EAST);
-
+        City england = new City();
+        Robot karel = new Robot(england, 0, 0, Direction.SOUTH);
         // put a wall up
         new Wall(kw, 2, 5, Direction.EAST);
 
@@ -54,10 +52,9 @@ public class ConditionExamples {
             if (karel.canPickThing()) {
                 //pick thing
                 karel.pickThing();
-               
-                }else{
+
+            } else {
                 //if karel cant pick thing, move
-                
             }
 
 
