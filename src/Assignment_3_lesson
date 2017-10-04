@@ -1,0 +1,21 @@
+
+                                              PRIMITIVES
+Type                 Keyword                        Description                             Examples       
+                                                    
+Integer     -->      int(short, long)               Positive or Negative whole numbers      ex 7, -3
+Double      -->      double(float)                  Positive or Negative real numbers       ex 3.19, -2.0
+character   -->      char                           A single letter                         ex 'c'. 'F', '2'
+True/False  -->      boolean                        True or False                           ex True, False
+String      -->      string                         words or sentences                      ex "Hello"
+
+
+OBJECTS: City, Thing, Robot, etc...
+OBJECTS ARE BUILT FROM PRIMITIVE VARIABLES
+
+
+                                                    EXAMPLES
+1. Start with lower case letter
+2. name that explains its function
+3. Always give value to variables
+
+int yearBorn = 2001; 
