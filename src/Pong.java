@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JComponent;
@@ -26,47 +25,44 @@ public class Pong extends JComponent {
     // Height and Width of our game
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
-    
+
     //Title of the window
-    String title = "My Game";
+    String title = "Pong";
 
     // sets the framerate and delay for our game
     // you just need to select an approproate framerate
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
 
-
     // YOUR GAME VARIABLES WOULD GO HERE
     int paddleHeight = 100;
     int paddleWidth = 25;
-    Rectangle player1 = new Rectangle(50, HEIGHT/2 - paddleHeight/2, paddleWidth, paddleHeight); 
-    
-    Rectangle player2 = new Rectangle(WIDTH - 50 - paddleWidth, HEIGHT/2 - paddleHeight/2, paddleWidth, paddleHeight);
-    
-    int paddleSpeed = 5;
-    
+    Rectangle player1 = new Rectangle(50, HEIGHT / 2 - paddleHeight / 2, paddleWidth, paddleHeight);
+
+    Rectangle player2 = new Rectangle(WIDTH - 50 - paddleWidth, HEIGHT / 2 - paddleHeight / 2, paddleWidth, paddleHeight);
+
+    int paddleSpeed = 7;
+
     boolean player1Up = false;
     boolean player1Down = false;
     boolean player2Up = false;
     boolean player2Down = false;
-    
+
     int ballSize = 30;
-    Rectangle ball = new Rectangle(WIDTH/2 - ballSize/2, HEIGHT/2 - ballSize/2, ballSize, ballSize);
+    Rectangle ball = new Rectangle(WIDTH / 2 - ballSize / 2, HEIGHT / 2 - ballSize / 2, ballSize, ballSize);
     int ballXDirection = 1;
     int ballYDirection = -1;
-    int ballSpeed = 7;
-    
+    int ballSpeed = 5;
+
     int player1Score = 0;
     int player2Score = 0;
-    
-    Font biggerFont = new Font("arial", Font.BOLD, 42);
-    
-    // GAME VARIABLES END HERE   
 
-    
+    Font biggerFont = new Font("arial", Font.BOLD, 42);
+
+    // GAME VARIABLES END HERE   
     // Constructor to create the Frame and place the panel in
     // You will learn more about this in Grade 12 :)
-    public Pong(){
+    public Pong() {
         // creates a windows to show my game
         JFrame frame = new JFrame(title);
 
@@ -81,16 +77,16 @@ public class Pong extends JComponent {
         frame.pack();
         // shows the window to the user
         frame.setVisible(true);
-        
+
         // add listeners for keyboard and mouse
         frame.addKeyListener(new Keyboard());
         Mouse m = new Mouse();
-        
+
         this.addMouseMotionListener(m);
         this.addMouseWheelListener(m);
         this.addMouseListener(m);
     }
-    
+
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
@@ -104,17 +100,17 @@ public class Pong extends JComponent {
         g.setColor(Color.BLACK);
         // draw black play surface
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        
+
         // switch to white
         g.setColor(Color.WHITE);
-        
+
         // draw scores
         g.setFont(biggerFont);
         g.setColor(Color.RED);
         g.drawString("" + player1Score, WIDTH / 2 - 100, 50);
         g.setColor(Color.BLUE);
         g.drawString("" + player2Score, WIDTH / 2 + 100, 50);
-        
+
         // draw the players
         g.setColor(Color.RED);
         g.fillRect(player1.x, player1.y, player1.width, player1.height);
@@ -122,16 +118,22 @@ public class Pong extends JComponent {
         g.fillRect(player2.x, player2.y, player2.width, player2.height);
         g.setColor(Color.GREEN);
         g.fillOval(ball.x, ball.y, ball.width, ball.height);
+        
+        g.setColor(Color.YELLOW);
+        if (player1Score == 10) {
+            g.drawString("PLAYER 1 WINS", WIDTH / 2 - 175, HEIGHT / 2);
+        } else if(player2Score == 10){
+            g.drawString("PLAYER 2 WINS", WIDTH / 2 - 175, HEIGHT / 2);
+
+        }
         // GAME DRAWING ENDS HERE
     }
 
-
     // This method is used to do any pre-setup you might need to do
     // This is run before the game loop begins!
-    public void  preSetup(){
-       // Any of your pre setup before the loop starts should go here
+    public void preSetup() {
+        // Any of your pre setup before the loop starts should go here
 
-       
     }
 
     // The main game loop
@@ -153,63 +155,61 @@ public class Pong extends JComponent {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
-            
             // move the ball
             ball.x = ball.x + ballXDirection * ballSpeed;
             ball.y = ball.y + ballYDirection * ballSpeed;
             // get ball to bouce off floor
             // bottom of ball hit height of screen
-            if(ball.y + ball.height >= HEIGHT){
+            if (ball.y + ball.height >= HEIGHT) {
                 // change y direction
                 ballYDirection = ballYDirection * -1;
             }
             // top of ball hit top of the screen
-            if(ball.y <= 0){
+            if (ball.y <= 0) {
                 ballYDirection = ballYDirection * -1;
             }
-            
+
             // move player 1
-            if(player1Up && player1.y > 0){
+            if (player1Up && player1.y > 0) {
                 player1.y = player1.y - paddleSpeed;
-            }else if(player1Down && player1.y + player1.height < HEIGHT){
+            } else if (player1Down && player1.y + player1.height < HEIGHT) {
                 player1.y = player1.y + paddleSpeed;
             }
             // move player 2
-            if(player2Up && player2.y > 0){
+            if (player2Up && player2.y > 0) {
                 player2.y = player2.y - paddleSpeed;
-            }else if(player2Down && player2.y + player2.height < HEIGHT){
+            } else if (player2Down && player2.y + player2.height < HEIGHT) {
                 player2.y = player2.y + paddleSpeed;
             }
             // did the ball hit the paddle1
-            if(ball.intersects(player1)){
+            if (ball.intersects(player1)) {
                 ballXDirection = ballXDirection * -1;
             }
             // did the ball hit the paddle1
-            if(ball.intersects(player2)){
+            if (ball.intersects(player2)) {
                 ballXDirection = ballXDirection * -1;
             }
             // ball hits left side of the screen
-            if(ball.x < 0){
+            if (ball.x < 0) {
                 player2Score++;
-                ball.x = WIDTH/2 - ball.width/2;
-                ball.y = HEIGHT/2 - ball.height/2; 
+                ball.x = WIDTH / 2 - ball.width / 2;
+                ball.y = HEIGHT / 2 - ball.height / 2;
                 ballXDirection = ballXDirection * -1;
             }
-            
+
             // ball hitting right side of the screen
-            if(ball.x + ball.width > WIDTH){
+            if (ball.x + ball.width > WIDTH) {
                 player1Score++;
-                ball.x = WIDTH/2 - ball.width/2;
-                ball.y = HEIGHT/2 - ball.height/2;
+                ball.x = WIDTH / 2 - ball.width / 2;
+                ball.y = HEIGHT / 2 - ball.height / 2;
                 ballXDirection = ballXDirection * -1;
 
             }
-            
-            if(player1Score ==10){
+
+            if (player1Score == 10 || player2Score == 10) {
                 done = true;
             }
-            
-            
+
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
             repaint();
@@ -230,84 +230,83 @@ public class Pong extends JComponent {
         }
     }
 
-    
-
     // Used to implement any of the Mouse Actions
     private class Mouse extends MouseAdapter {
+
         // if a mouse button has been pressed down
         @Override
-        public void mousePressed(MouseEvent e){
-            
+        public void mousePressed(MouseEvent e) {
+
         }
-        
+
         // if a mouse button has been released
         @Override
-        public void mouseReleased(MouseEvent e){
-            
+        public void mouseReleased(MouseEvent e) {
+
         }
-        
+
         // if the scroll wheel has been moved
         @Override
-        public void mouseWheelMoved(MouseWheelEvent e){
-            
+        public void mouseWheelMoved(MouseWheelEvent e) {
+
         }
 
         // if the mouse has moved positions
         @Override
-        public void mouseMoved(MouseEvent e){
-            
+        public void mouseMoved(MouseEvent e) {
+
         }
     }
-    
+
     // Used to implements any of the Keyboard Actions
-    private class Keyboard extends KeyAdapter{
+    private class Keyboard extends KeyAdapter {
+
         // if a key has been pressed down
         @Override
-        public void keyPressed(KeyEvent e){
+        public void keyPressed(KeyEvent e) {
             // store the key being pressed
             int key = e.getKeyCode();
             // determine which key it is 
-            if(key == KeyEvent.VK_W){
+            if (key == KeyEvent.VK_W) {
                 player1Up = true;
-            }else if(key == KeyEvent.VK_S){
+            } else if (key == KeyEvent.VK_S) {
                 player1Down = true;
-                
-            }else if(key == KeyEvent.VK_UP){
+
+            } else if (key == KeyEvent.VK_UP) {
                 player2Up = true;
-            }else if(key == KeyEvent.VK_DOWN){
+            } else if (key == KeyEvent.VK_DOWN) {
                 player2Down = true;
-                
+
             }
         }
-        
+
         // if a key has been released
         @Override
-        public void keyReleased(KeyEvent e){
-                        // store the key being pressed
+        public void keyReleased(KeyEvent e) {
+            // store the key being pressed
             int key = e.getKeyCode();
             // determine which key it is 
-            if(key == KeyEvent.VK_W){
+            if (key == KeyEvent.VK_W) {
                 player1Up = false;
-            }else if(key == KeyEvent.VK_S){
+            } else if (key == KeyEvent.VK_S) {
                 player1Down = false;
-            
-            }else if(key == KeyEvent.VK_UP){
+
+            } else if (key == KeyEvent.VK_UP) {
                 player2Up = false;
-            }else if(key == KeyEvent.VK_DOWN){
+            } else if (key == KeyEvent.VK_DOWN) {
                 player2Down = false;
+            }
         }
     }
-    }
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // creates an instance of my game
         Pong game = new Pong();
-                
+
         // starts the game loop
         game.run();
     }
 }
-
